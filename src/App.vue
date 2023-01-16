@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import TheCookieBanner from '~/components/&app/TheCookieBanner.vue';
-
 import { isDark } from '~/composables/dark';
 
 useHead({
@@ -20,5 +18,4 @@ useHead({
       <component :is="Component" />
     </BaseFadeTransition>
   </RouterView>
-  <TheCookieBanner />
 </template>
