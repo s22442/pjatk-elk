@@ -13,12 +13,10 @@ import 'uno.css';
 
 const routes = setupLayouts(generatedRoutes);
 
-// STARTER_DOCS: https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
   App,
   { routes, base: import.meta.env.BASE_URL },
   async (ctx) => {
-    // install all modules under `modules/`
     const modules = await Promise.all(
       Object.values(
         import.meta.glob<{ install: InstallModule }>('./modules/*.ts')

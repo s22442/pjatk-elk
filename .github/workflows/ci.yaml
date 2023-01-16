@@ -20,8 +20,6 @@ jobs:
           node-version: 18.12
           cache: pnpm
 
-      - run: npx playwright install --with-deps
-
       - name: Install node_modules
         run: pnpm i --frozen-lockfile
 
@@ -33,6 +31,3 @@ jobs:
 
       - name: Tests
         run: pnpm test:coverage
-
-      - name: Tests e2e
-        run: pnpm test:e2e

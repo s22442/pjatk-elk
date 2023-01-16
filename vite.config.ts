@@ -1,4 +1,3 @@
-import VueI18n from '@intlify/vite-plugin-vue-i18n';
 import Eslint from '@nabla/vite-plugin-eslint';
 import Vue from '@vitejs/plugin-vue';
 import Unocss from 'unocss/vite';
@@ -38,7 +37,6 @@ const BaseComponentsResolver = (options: {
 const PagesImportModeResolver =
   (): ImportModeResolver =>
   (filepath, { dirs }) => {
-    // top level index.vue: `sync`, others: `async`
     for (const { baseRoute, dir } of dirs) {
       if (baseRoute === '' && filepath.startsWith(`/${dir}/index`)) {
         return 'sync';
@@ -60,11 +58,9 @@ export default defineConfig(({ mode }) => ({
 
   plugins: [
     Vue({
-      // STARTER_DOCS: https://vuejs.org/guide/extras/reactivity-transform.html
       reactivityTransform: true,
     }),
 
-    // STARTER_DOCS: https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [
         'vue',
@@ -78,7 +74,6 @@ export default defineConfig(({ mode }) => ({
       dts: 'src/__vite-auto-imports.d.ts',
     }),
 
-    // STARTER_DOCS: https://github.com/antfu/unplugin-vue-components
     Components({
       dirs: [],
       resolvers: [
@@ -88,29 +83,17 @@ export default defineConfig(({ mode }) => ({
         }),
       ],
 
-      // prevent tests from breaking the declaration file
       dts: mode === 'test' ? false : 'src/__vite-components.d.ts',
     }),
 
-    // STARTER_DOCS: https://github.com/hannoeru/vite-plugin-pages
     Pages({
       importMode: mode === 'production' ? PagesImportModeResolver() : 'sync',
     }),
 
-    // STARTER_DOCS: https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts({ defaultLayout: '_default' }),
 
-    // STARTER_DOCS: https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n
-    VueI18n({
-      runtimeOnly: true,
-      compositionOnly: true,
-      include: `${cwd}/locales/*.yaml`,
-    }),
-
-    // STARTER_DOCS: https://github.com/unocss/unocss
     Unocss(),
 
-    // STARTER_DOCS: https://github.com/antfu/vite-plugin-pwa
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
@@ -139,24 +122,19 @@ export default defineConfig(({ mode }) => ({
       },
     }),
 
-    // STARTER_DOCS: https://github.com/nabla/vite-plugin-eslint
     Eslint({ eslintOptions: { cache: false } }),
 
-    // STARTER_DOCS: https://github.com/antfu/vite-plugin-inspect
-    // Visit http://localhost:3333/__inspect to see the inspector
     Inspect(),
   ],
 
   build: { target: ['esnext'] },
 
-  // STARTER_DOCS: https://github.com/antfu/vite-ssg
   ssgOptions: {
     script: 'async',
     formatting: 'minify',
     onFinished: generateSitemap,
   },
 
-  // STARTER_DOCS: https://vitest.dev/
   test: {
     clearMocks: true,
     setupFiles: 'tests/setup.ts',
@@ -165,14 +143,10 @@ export default defineConfig(({ mode }) => ({
     environment: 'jsdom',
     deps: { inline: ['@vue', '@vueuse', 'vue-demi'] },
 
-    // STARTER_DOCS: https://vitest.dev/guide/coverage.html
     coverage: {
       include: ['src/**/*.{ts,vue}'],
       exclude: ['src/main.ts', 'src/modules', 'src/types', '**/*.d.ts'],
       all: true,
-
-      // change the values below to something higher for a real project
-      // preferred are 80+
       branches: 10,
       functions: 10,
       lines: 10,
