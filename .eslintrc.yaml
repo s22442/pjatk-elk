@@ -8,6 +8,7 @@ ignorePatterns:
   - 'pnpm-lock.yaml'
   - '**/__vite*'
   - LICENSE
+  - 'lib'
 
 env:
   browser: true
