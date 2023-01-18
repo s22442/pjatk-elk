@@ -21,7 +21,7 @@ const inputToNum = (str: string) => {
     return 0;
   }
 
-  return num;
+  return Math.max(0, num);
 };
 
 const q = $computed(() => inputToNum(qInput));

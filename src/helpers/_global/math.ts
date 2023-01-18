@@ -1,4 +1,4 @@
-const PRECISION = 8;
+const PRECISION = 4;
 
 const multiplier = 10 ** PRECISION;
 

@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import { Chart, Line, Grid } from 'vue3-charts';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'vue-chartjs';
 
 import { generateACAnalysisValues } from '~/helpers/ac';
+
+import type { ChartData, ChartOptions } from 'chart.js';
 
 const { c1, c2, r1, r2, r3, r4 } = defineProps<{
   c1: number;
@@ -12,38 +24,59 @@ const { c1, c2, r1, r2, r3, r4 } = defineProps<{
   r4: number;
 }>();
 
-const log = console.log;
-
-console.log = () => {
-  //
-};
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const analysisValues = $computed(() =>
   generateACAnalysisValues(c1, c2, r1, r2, r3, r4)
 );
 
-const data: { db: number; logf: number }[] = [
-  { db: 4, logf: 0.4 },
-  { db: 5, logf: 0.1 },
-  { db: 3, logf: 0.2 },
-  { db: 2, logf: 0.3 },
-  { db: 1, logf: 0.1 },
-];
+const data = $computed<ChartData<'line'>>(() => ({
+  labels: analysisValues.x,
+  datasets: [
+    {
+      label: 'Charakterystyka amplitudowa',
+      data: analysisValues.y,
+      borderColor: '#f00',
+      pointBackgroundColor: '#f00',
+      pointBorderWidth: 0,
+      pointRadius: 0,
+      pointHoverRadius: 0,
+    },
+  ],
+}));
+
+const OPTIONS: ChartOptions<'line'> = {
+  scales: {
+    y: {
+      title: {
+        text: 'dB',
+        display: true,
+      },
+    },
+    x: {
+      title: {
+        text: 'log10(Frequency in Hz)',
+        display: true,
+      },
+      ticks: {
+        autoSkip: true,
+        autoSkipPadding: 20,
+      },
+    },
+  },
+};
 </script>
 
 <template>
-  <div>
-    <div>
-      <Chart
-        :size="{ width: 500, height: 400 }"
-        :data="data"
-        direction="vertical"
-      >
-        <template #layers>
-          <Grid stroke-dasharray="2,2" />
-          <Line :data-keys="['db', 'logf']" />
-        </template>
-      </Chart>
-    </div>
+  <div _w200 _h80 _flex _justify-center>
+    <Line :data="data" :options="OPTIONS" />
   </div>
 </template>

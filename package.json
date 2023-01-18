@@ -23,9 +23,10 @@
   "dependencies": {
     "@vueuse/core": "^9.6.0",
     "@vueuse/head": "^1.0.18",
+    "chart.js": "^4.2.0",
     "vue": "3.2.41",
-    "vue-router": "^4.1.6",
-    "vue3-charts": "^1.1.32"
+    "vue-chartjs": "^5.2.0",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@iconify/json": "^2.1.143",
