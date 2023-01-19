@@ -1,5 +1,4 @@
-// @ts-expect-error missing type declarations
-import { Schematic } from '~/lib/schematic.js';
+import { Schematic } from '~/lib/schematic';
 
 const generateSchematicPayload = (
   c1: number,
@@ -70,6 +69,7 @@ export const generateACAnalysisValues = (
   r3: number,
   r4: number
 ): { x: number[]; y: number[] } => {
+  // @ts-expect-error constructor params are not necessary
   const schematic = new Schematic();
   schematic.load(generateSchematicPayload(c1, c2, r1, r2, r3, r4));
   const ac = schematic.calcAC(50, 1, 10_000_000_000, 'KW');

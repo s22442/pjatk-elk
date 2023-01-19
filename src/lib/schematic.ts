@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 var _0x4b13a9 = _0x54ec;
 (function (_0x4eafc4, _0x4285c2) {
   var _0x2c5b40 = _0x54ec,
