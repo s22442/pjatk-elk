@@ -96,13 +96,11 @@ const scrollHandleStyle = $computed(() => ({
         _inset-y-0
         _right-0
         _w-2
-        _rounded-full
       >
         <div
           _w-full
           _h-full
           _relative
-          _rounded-full
           _transition-colors
           :_bg="isTrackScrollActive ? 'accent-focus/75' : 'secondary/25'"
           @mousedown.stop="(e) => startTrackScroll(e)"

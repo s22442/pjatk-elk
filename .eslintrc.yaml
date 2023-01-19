@@ -220,6 +220,7 @@ rules:
   'vue/no-useless-mustaches': warn
   'vue/no-useless-v-bind': warn
   'vue/no-v-text': error
+  'vue/no-v-html': off
   'vue/padding-line-between-blocks': warn
   'vue/prefer-separate-static-class': warn
   'vue/prefer-true-attribute-shorthand': error
@@ -229,7 +230,7 @@ rules:
     - error
     - always
 
-  'vue-scoped-css/enforce-style-type': error
+  'vue-scoped-css/enforce-style-type': off
   'vue-scoped-css/no-deprecated-deep-combinator': error
   'vue-scoped-css/no-deprecated-v-enter-v-leave-class': error
   'vue-scoped-css/no-parent-of-v-global': error
