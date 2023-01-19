@@ -5,6 +5,8 @@ import schemaImg from '~/assets/elk-schema.png';
 
 import katex from 'katex';
 
+import { calculateR, calculateR3 } from '~/helpers/resistance';
+
 const nano = (v: number) => v / 10 ** 9;
 const kilo = (v: number) => v * 10 ** 3;
 
@@ -31,15 +33,9 @@ const inputToNum = (str: string) => {
 const q = $computed(() => inputToNum(qInput));
 const w0 = $computed(() => inputToNum(w0Input));
 
-const r = $computed(() => {
-  const rcproduct = 1 / w0;
-  return roundResult(rcproduct / C);
-});
+const r = $computed(() => calculateR(C, w0));
 
-const r3 = $computed(() => {
-  const divider = 2 - 1 / q;
-  return roundResult(R4 / divider);
-});
+const r3 = $computed(() => calculateR3(q, R4));
 
 const isInputValid = $computed(() =>
   [w0, r, r3].every((v) => v > 0 && v !== Number.POSITIVE_INFINITY)
