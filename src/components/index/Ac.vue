@@ -42,7 +42,6 @@ const data = $computed<ChartData<'line'>>(() => ({
   labels: analysisValues.x,
   datasets: [
     {
-      label: 'Charakterystyka amplitudowa',
       data: analysisValues.y,
       borderColor: '#f00',
       pointBackgroundColor: '#f00',
@@ -71,6 +70,9 @@ const OPTIONS: ChartOptions<'line'> = {
         autoSkipPadding: 20,
       },
     },
+  },
+  plugins: {
+    legend: { display: false },
   },
 };
 </script>

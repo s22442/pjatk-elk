@@ -1,5 +1,5 @@
 <template>
-  <main _p="x4 y10">
+  <main _py6>
     <RouterView />
   </main>
 </template>
