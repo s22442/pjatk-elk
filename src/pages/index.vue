@@ -13,8 +13,10 @@ const kilo = (v: number) => v * 10 ** 3;
 const C = nano(10);
 const R4 = kilo(22);
 
-const qInput = $ref('1');
-const w0Input = $ref('5000');
+const qInput = $ref('0.707');
+const f0Input = $ref('1000');
+const fStartInput = $ref('1');
+const fEndInput = $ref('10000000000');
 
 const inputToNum = (str: string) => {
   if (!str) {
@@ -31,14 +33,16 @@ const inputToNum = (str: string) => {
 };
 
 const q = $computed(() => inputToNum(qInput));
-const w0 = $computed(() => inputToNum(w0Input));
+const f0 = $computed(() => inputToNum(f0Input));
+const fStart = $computed(() => inputToNum(fStartInput));
+const fEnd = $computed(() => inputToNum(fEndInput));
 
-const r = $computed(() => calculateR(C, w0));
+const r = $computed(() => calculateR(C, f0));
 
 const r3 = $computed(() => calculateR3(q, R4));
 
 const isInputValid = $computed(() =>
-  [w0, r, r3].every((v) => v > 0 && v !== Number.POSITIVE_INFINITY)
+  [f0, r, r3].every((v) => v > 0 && v !== Number.POSITIVE_INFINITY)
 );
 
 const expression = (str: string) => katex.renderToString(str);
@@ -82,7 +86,7 @@ const expression = (str: string) => katex.renderToString(str);
       </div>
 
       <div>
-        <div _text-4>częstość graniczna:</div>
+        <div _text-4>częstotliwość graniczna:</div>
         <div
           v-html="expression('\\omega_{0} = \\frac{1}{R_{1}R_{2}C_{1}C_{2}}')"
         />
@@ -101,6 +105,7 @@ const expression = (str: string) => katex.renderToString(str);
             )
           "
         />
+        <div v-html="expression('f_{0} = \\frac{1}{2\\pi RC}')" />
       </div>
     </div>
 
@@ -120,8 +125,26 @@ const expression = (str: string) => katex.renderToString(str);
       </div>
 
       <div>
-        <div v-html="expression('w_{0} =')" />
-        <BaseInput v-model="w0Input" />
+        <div v-html="expression('f_{0} =')" />
+        <BaseInput v-model="f0Input" />
+      </div>
+
+      <div
+        _flex="~ col"
+        _items-center
+        _gap4
+        _pt2
+        _children="flex-(~ col) gap1 items-center"
+      >
+        <div>
+          <div>Czestotliwość startowa charakterystyki amplitudowej</div>
+          <BaseInput v-model="fStartInput" />
+        </div>
+
+        <div>
+          <div>Czestotliwość końcowa charakterystyki amplitudowej</div>
+          <BaseInput v-model="fEndInput" />
+        </div>
       </div>
     </div>
 
@@ -138,7 +161,16 @@ const expression = (str: string) => katex.renderToString(str);
         <div _flex="~ col" _items-center _gap4>
           <div _text="xl center">Charakterystyka amplitudowa</div>
 
-          <Ac :c1="C" :c2="C" :r1="r" :r2="r" :r3="r3" :r4="R4" />
+          <Ac
+            :f-start="fStart"
+            :f-end="fEnd"
+            :c1="C"
+            :c2="C"
+            :r1="r"
+            :r2="r"
+            :r3="r3"
+            :r4="R4"
+          />
         </div>
       </div>
 

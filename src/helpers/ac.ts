@@ -62,6 +62,8 @@ const generateSchematicPayload = (
   ]);
 
 export const generateACAnalysisValues = (
+  fStart: number,
+  fEnd: number,
   c1: number,
   c2: number,
   r1: number,
@@ -72,7 +74,7 @@ export const generateACAnalysisValues = (
   // @ts-expect-error constructor params are not necessary
   const schematic = new Schematic();
   schematic.load(generateSchematicPayload(c1, c2, r1, r2, r3, r4));
-  const ac = schematic.calcAC(50, 1, 10_000_000_000, 'KW');
+  const ac = schematic.calcAC(50, fStart, fEnd, 'KW');
   return {
     x: ac.x_values.map(roundResult),
     y: ac.y_values[0][2].map(roundResult),

@@ -15,7 +15,9 @@ import { generateACAnalysisValues } from '~/helpers/ac';
 
 import type { ChartData, ChartOptions } from 'chart.js';
 
-const { c1, c2, r1, r2, r3, r4 } = defineProps<{
+const { fStart, fEnd, c1, c2, r1, r2, r3, r4 } = defineProps<{
+  fStart: number;
+  fEnd: number;
   c1: number;
   c2: number;
   r1: number;
@@ -35,7 +37,7 @@ ChartJS.register(
 );
 
 const analysisValues = $computed(() =>
-  generateACAnalysisValues(c1, c2, r1, r2, r3, r4)
+  generateACAnalysisValues(fStart, fEnd, c1, c2, r1, r2, r3, r4)
 );
 
 const data = $computed<ChartData<'line'>>(() => ({
